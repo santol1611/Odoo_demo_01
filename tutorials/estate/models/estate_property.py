@@ -8,6 +8,7 @@ class EstateProperty(models.Model):
     _name = "estate.property"
     _description = "Estate Property Description"
     
+    
     name = fields.Char(string="Title", required=True)
     description = fields.Text()
     postcode = fields.Char()
@@ -17,7 +18,7 @@ class EstateProperty(models.Model):
     expected_price = fields.Float(required=True)
     selling_price = fields.Float(readonly=True, copy=False)
     bedrooms = fields.Integer(default=2)
-    living_area = fields.Integer()
+    living_area = fields.Integer(string="Living Area (sqm)")
     facades = fields.Integer()
     garage = fields.Boolean()
     garden = fields.Boolean()
@@ -36,3 +37,5 @@ class EstateProperty(models.Model):
         ('canceled', 'Canceled'),
     ], string="Status", default='new', required=True)
     active = fields.Boolean(default=False)
+    
+    property_type_id = fields.Many2one(comodel_name='estate.property.type', string="Property Type")
