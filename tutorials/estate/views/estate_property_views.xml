@@ -25,6 +25,7 @@
                     <field name="expected_price" />
                     <field name="selling_price" />
                     <field name="date_availability" />
+                    <field name="state" />
                 </list>
             </field>
         </record>
@@ -63,11 +64,56 @@
                                     <field name="garden" />
                                     <field name="garden_area" />
                                     <field name="garden_orientation" />
+                                    <field name="state" />
                                 </group>
                             </page>
                         </notebook>
                     </sheet>
                 </form>
+            </field>
+        </record>
+
+        <record id="view_estate_estate_property_search" model="ir.ui.view">
+            <field name="name">estate.estate.property.search</field>
+            <field name="model">estate.property</field>
+            <field name="arch" type="xml">
+                <search string="Properties">
+                    <field name="name" />
+                    <field name="postcode" />
+                    <field name="expected_price" />
+                    <field name="bedrooms" />
+                    <field name="living_area" />
+                    <field name="facades" />
+                    <filter name="filter_avaiable"
+                        string="Available"
+                        domain="[('state','not in', ['sold','canceled'])]"
+                        context="{}" />
+                    <filter name="filter_not_avaiable"
+                        string="Not available"
+                        domain="[('state','=', ['sold','canceled'])]"
+                        context="{}" />
+                    <filter name="filter_new"
+                        string="New"
+                        domain="[('state','=', ['new'])]"
+                        context="{}" />
+                    <filter name="filter_less_130000"
+                        string="Price &lt;= 130000"
+                        domain="[('expected_price','&lt;=', 130000)]"
+                        context="{}" />
+                    <filter name="filter_greater_120000"
+                        string="Price &gt;= 120000"
+                        domain="[('expected_price','&gt;=', 120000)]"
+                        context="{}" />
+
+                    <filter name="group_by_postcode"
+                        string="Prostcode"
+                        domain="[]"
+                        context="{'group_by':'postcode'}" />                     
+                    <filter name="group_by_garage"
+                        string="Garage"
+                        domain="[]"
+                        context="{'group_by':'garage'}" />
+                </search>
             </field>
         </record>
 
